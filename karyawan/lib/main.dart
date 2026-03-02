@@ -36,8 +36,27 @@ class MyHomePage extends StatelessWidget{
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: const Text('Daftar Karyawan'),
       ),
-      body: const Center(
-        child: Text('Hello World'),
+      body: FutureBuilder(
+        future: _readJsonData(),
+        builder: (context, snapshot) {
+          if (snapshot.hasError) {
+            return Center(child: Text('Error: ${snapshot.error}'));
+          }
+          if (snapshot.hasData) {
+            return ListView.builder(
+              itemCount: snapshot.data!.length,
+              itemBuilder: (context, index) {
+                final karyawan = snapshot.data![index];
+                return ListTile(
+                  title: Text(karyawan.nama),
+                  subtitle: Text(karyawan.umur.toString()),
+                );
+              },
+            );
+          } else {
+            return const Center(child: CircularProgressIndicator());
+          }
+        },
       ),
     );
   }
