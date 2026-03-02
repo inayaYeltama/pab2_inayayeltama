@@ -22,6 +22,13 @@ class MainApp extends StatelessWidget {
 class MyHomePage extends StatelessWidget{
   const MyHomePage({super.key});
   
+  // ✨ Tambahkan fungsi ini
+  Future<List<Karyawan>> _readJsonData() async {
+    final String response = await rootBundle.loadString('assets/karyawan.json');
+    final List<dynamic> data = json.decode(response);
+    return data.map((json) => Karyawan.fromJson(json)).toList();
+  }
+  
   @override
    Widget build(BuildContext context) {
     return Scaffold(
