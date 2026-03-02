@@ -48,8 +48,16 @@ class MyHomePage extends StatelessWidget{
               itemBuilder: (context, index) {
                 final karyawan = snapshot.data![index];
                 return ListTile(
+                  isThreeLine: true,
                   title: Text(karyawan.nama),
-                  subtitle: Text(karyawan.umur.toString()),
+                  subtitle: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text('Umur : ${karyawan.umur}'),
+                      Text('Alamat : ${karyawan.alamat.jalan}, ${karyawan.alamat.kota}, ${karyawan.alamat.provinsi}'),
+                      Text('Hobi : ${karyawan.hobi.join(", ")}'),
+                    ],
+                  ),
                 );
               },
             );
