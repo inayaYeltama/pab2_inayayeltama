@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "485969055035",
+    "firebase_url": "https://mdpgold-bafbc-default-rtdb.firebaseio.com",
+    "project_id": "mdpgold-bafbc",
+    "storage_bucket": "mdpgold-bafbc.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:485969055035:android:fcd89089b62b27ab91fb1e",
+        "android_client_info": {
+          "package_name": "com.example.mdp_gold"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC9Jdne6tz0Kp0xj8Hflim8LTw1FlYgMpE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
