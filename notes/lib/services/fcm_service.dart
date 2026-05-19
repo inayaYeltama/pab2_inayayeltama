@@ -13,8 +13,8 @@ class FcmService {
   final FlutterLocalNotificationsPlugin _localNotificationsPlugin =
       FlutterLocalNotificationsPlugin();
 
-  static const String _baseUrl = 'notes-rest-api-sigma.vercel.app';
-  static const String _topicName = 'notes';
+  static const String _baseUrl = 'https://notes-rest-api.vercel.app';
+  static const String _topicName = 'notes'; // default topic
 
   /// Initialize FCM and Local Notifications
   Future<void> initialize() async {
@@ -190,6 +190,34 @@ class FcmService {
       }
     } catch (e) {
       debugPrint('Error sending notification: $e');
+    }
+  }
+
+  /// Subscribe to a specific topic
+  Future<void> subscribeToTopic(String topic) async {
+    if (kIsWeb) {
+      debugPrint('Topic subscription is not supported on Web.');
+      return;
+    }
+    try {
+      await _messaging.subscribeToTopic(topic);
+      debugPrint('Successfully subscribed to topic: $topic');
+    } catch (e) {
+      debugPrint('Error subscribing to topic $topic: $e');
+    }
+  }
+
+  /// Unsubscribe from a specific topic
+  Future<void> unsubscribeFromTopic(String topic) async {
+    if (kIsWeb) {
+      debugPrint('Topic unsubscription is not supported on Web.');
+      return;
+    }
+    try {
+      await _messaging.unsubscribeFromTopic(topic);
+      debugPrint('Successfully unsubscribed from topic: $topic');
+    } catch (e) {
+      debugPrint('Error unsubscribing from topic $topic: $e');
     }
   }
 }
