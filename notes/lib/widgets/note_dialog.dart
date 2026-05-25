@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import '../models/note.dart';
+import '../l10n/app_localizations.dart';
 
 class NoteDialog extends StatefulWidget {
   final Note? note; // null = add mode, non-null = edit mode
@@ -60,8 +61,9 @@ class _NoteDialogState extends State<NoteDialog> {
     } catch (e) {
       setState(() => _isLoading = false);
       if (mounted) {
+        final l10n = AppLocalizations.of(context)!;
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Gagal memilih gambar: $e')),
+          SnackBar(content: Text(l10n.pickImageFailed(e.toString()))),
         );
       }
     }
@@ -75,6 +77,7 @@ class _NoteDialogState extends State<NoteDialog> {
   @override
   Widget build(BuildContext context) {
     final isEditing = widget.note != null;
+    final l10n = AppLocalizations.of(context)!;
 
     return Dialog(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
@@ -98,7 +101,7 @@ class _NoteDialogState extends State<NoteDialog> {
                     ),
                     const SizedBox(width: 8),
                     Text(
-                      isEditing ? 'Edit Note' : 'Add Note',
+                      isEditing ? l10n.editNote : l10n.addNote,
                       style: const TextStyle(
                         fontSize: 22,
                         fontWeight: FontWeight.bold,
@@ -112,7 +115,7 @@ class _NoteDialogState extends State<NoteDialog> {
                 TextFormField(
                   controller: _titleController,
                   decoration: InputDecoration(
-                    labelText: 'Title',
+                    labelText: l10n.titleLabel,
                     prefixIcon: const Icon(Icons.title),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(12),
@@ -122,7 +125,7 @@ class _NoteDialogState extends State<NoteDialog> {
                   ),
                   validator: (value) {
                     if (value == null || value.trim().isEmpty) {
-                      return 'Title tidak boleh kosong';
+                      return l10n.titleEmpty;
                     }
                     return null;
                   },
@@ -134,7 +137,7 @@ class _NoteDialogState extends State<NoteDialog> {
                   controller: _descriptionController,
                   maxLines: 4,
                   decoration: InputDecoration(
-                    labelText: 'Description',
+                    labelText: l10n.descriptionLabel,
                     prefixIcon: const Padding(
                       padding: EdgeInsets.only(bottom: 60),
                       child: Icon(Icons.description),
@@ -147,7 +150,7 @@ class _NoteDialogState extends State<NoteDialog> {
                   ),
                   validator: (value) {
                     if (value == null || value.trim().isEmpty) {
-                      return 'Description tidak boleh kosong';
+                      return l10n.descriptionEmpty;
                     }
                     return null;
                   },
@@ -215,7 +218,7 @@ class _NoteDialogState extends State<NoteDialog> {
                           ),
                           const SizedBox(height: 8),
                           Text(
-                            'Tap to add image',
+                            l10n.tapToAddImage,
                             style: TextStyle(
                               color: Colors.grey.shade500,
                               fontSize: 14,
@@ -231,7 +234,7 @@ class _NoteDialogState extends State<NoteDialog> {
                   TextButton.icon(
                     onPressed: _pickImage,
                     icon: const Icon(Icons.swap_horiz),
-                    label: const Text('Change Image'),
+                    label: Text(l10n.changeImage),
                   ),
                 ],
 
@@ -243,7 +246,7 @@ class _NoteDialogState extends State<NoteDialog> {
                   children: [
                     TextButton(
                       onPressed: () => Navigator.of(context).pop(),
-                      child: const Text('Cancel'),
+                      child: Text(l10n.cancel),
                     ),
                     const SizedBox(width: 12),
                     ElevatedButton.icon(
@@ -260,7 +263,7 @@ class _NoteDialogState extends State<NoteDialog> {
                         }
                       },
                       icon: Icon(isEditing ? Icons.save : Icons.add),
-                      label: Text(isEditing ? 'Save' : 'Add'),
+                      label: Text(isEditing ? l10n.save : l10n.add),
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.deepPurple,
                         foregroundColor: Colors.white,
